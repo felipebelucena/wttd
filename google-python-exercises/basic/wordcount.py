@@ -46,6 +46,33 @@ import sys
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
 
+def printItems(items):
+    for key, value in items:
+        print(key, value)
+
+def parseFile(filename):
+    wordsDict = {}
+    with open(filename) as file:
+        text = file.read()
+        for word in text.split():
+            key = word.lower();
+            if key in wordsDict:
+                wordsDict[key] = wordsDict[key] + 1
+            else:
+                wordsDict[key] = 1
+    return wordsDict
+
+def print_words(filename):
+    wordsDict = parseFile(filename)
+    printItems(sorted(wordsDict.items()))
+
+
+def print_top(filename):
+    wordsDict = parseFile(filename)
+    items = sorted(wordsDict.items(), key=lambda x: x[1], reverse=True)
+
+    # print only the 20 top most words
+    printItems(items[:20])
 ###
 
 # This basic command line argument parsing code is provided and
